@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Maui Jim in the Snow</title>
+<meta name="description" content="Maui Jim in the Snow. Two key visuals for the FW winter sport campaign, shot in bright midday light across the Coast Mountains, Hokkaido and the Rockies. Justin Choquette.">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<style>
+:root{
+  --bg:#070707; --ink:#f3f1ec; --mid:#9b9b9b; --soft:#111; --orange:#FFC400;
+  --font:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --gut:clamp(20px,5vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:url("assets/topo.svg") center/1400px 1400px repeat;opacity:.9}
+section,footer,.bar,.progress{position:relative;z-index:1}
+.cover{z-index:1}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-weight:500;letter-spacing:-.02em;line-height:1.05}
+.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:600}
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--orange);transform-origin:0 50%;transform:scaleX(0);z-index:30}
+::selection{background:var(--orange);color:#fff}
+.orule{display:none}
+.bar{position:fixed;top:3px;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px var(--gut);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#fff;pointer-events:none;opacity:.85}
+.bar span:last-child{font-weight:500;opacity:.7}
+@media(max-width:820px){.bar{padding:14px 20px;font-size:10px;letter-spacing:.12em}.bar span:last-child{display:none}}
+
+section{padding:clamp(72px,12vh,140px) var(--gut)}
+.wrap{max-width:1180px;margin:0 auto}
+.center{text-align:center}
+.center .lead,.center h2{margin-left:auto;margin-right:auto}
+h2.big{font-size:clamp(32px,5vw,64px);margin-bottom:14px;max-width:16ch}
+.lead{color:var(--mid);max-width:min(56ch,100%);font-size:clamp(16px,1.3vw,19px)}
+
+/* cover */
+.cover{padding:0;position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:clip}
+.cover-photo{position:absolute;inset:0}
+.cover-photo img{width:100%;height:100%;object-fit:cover;transform-origin:center}
+.cover-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,7,7,.55),rgba(7,7,7,.42) 45%,rgba(7,7,7,.94) 100%)}
+.cover-text{position:relative;padding:120px var(--gut) 80px;max-width:1100px}
+.cover h1{font-size:clamp(52px,10vw,150px);letter-spacing:-.04em;line-height:.95;color:#fff}
+.cover h1 .ln{display:block;overflow:hidden}.cover h1 .ln span{display:block}
+.cover .sub{margin:26px auto 0;color:rgba(243,241,236,.85);font-size:clamp(16px,1.5vw,21px);max-width:44ch}
+.loc-list{list-style:none;margin:44px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px}
+.loc-list li{font-size:clamp(13px,1.2vw,16px);padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(6px);display:flex;gap:10px;align-items:baseline}
+.loc-list li span:last-child{color:var(--orange);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mid);animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,8px);opacity:1}}
+
+/* globe (full bleed, MapLibre) */
+.map-sec{padding:0}
+.map-pin{position:relative;min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(72px,10vh,110px) 0 28px;gap:8px;text-align:center}
+.map-head{padding:0 var(--gut)}
+.map-head h2{font-size:clamp(32px,5vw,64px)}
+.map-head p{color:var(--mid);margin-top:8px}
+.skip-route{position:absolute;right:var(--gut);top:clamp(76px,10vh,114px);z-index:5;appearance:none;background:rgba(7,7,7,.6);border:1px solid #444;color:#fff;font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);transition:all .25s}
+.skip-route:hover{border-color:var(--orange);color:var(--orange)}
+@media(max-width:820px){.skip-route{position:static;order:9;justify-self:center;margin:6px auto 0;padding:8px 14px}}
+.map-stage{position:relative;width:100%}
+.globe-wrap{position:relative;width:100%;height:min(64svh,760px);background:#070707;overflow:hidden}
+#globe{position:absolute;inset:0}
+.globe-wrap::before,.globe-wrap::after{content:"";position:absolute;left:0;right:0;height:70px;z-index:2;pointer-events:none}
+.globe-wrap::before{top:0;background:linear-gradient(#070707,transparent)}
+.globe-wrap::after{bottom:0;background:linear-gradient(transparent,#070707)}
+.globe-wrap{opacity:0;transition:opacity 1.1s ease}
+.globe-wrap.show{opacity:1}
+@media(prefers-reduced-motion:reduce){.globe-wrap{opacity:1}}
+.maplibregl-ctrl-attrib{font-size:10px;background:rgba(7,7,7,.6)!important;color:#777}
+.maplibregl-ctrl-attrib a{color:#999}
+.vehicle{width:34px;height:34px;display:grid;place-items:center;filter:drop-shadow(0 0 6px rgba(255,196,0,.9))}
+.vehicle svg{width:26px;height:26px;fill:#FFC400;display:none}
+.vehicle.plane svg.plane,.vehicle.car svg.car,.vehicle.van svg.van{display:block}
+.map-card{text-align:center;max-width:560px;padding:0 20px;margin:4px auto 0;min-height:150px}
+.map-card h3{font-size:clamp(28px,3.4vw,46px);margin:4px 0 2px;color:#fff}
+.map-card .when{color:var(--orange);font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.map-card p{margin-top:10px;font-size:15px;color:var(--mid)}
+.map-card .phase{margin-top:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);font-weight:500}
+.map-rail{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:0 var(--gut)}
+.map-rail button{appearance:none;background:none;border:1px solid #333;color:var(--mid);font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;border-radius:999px;cursor:pointer;transition:all .25s}
+.map-rail button.on{border-color:var(--orange);color:#111;background:var(--orange)}
+.map-rail button.done{color:#fff;border-color:#555}
+.map-rail button.later{opacity:.6}
+@media(max-width:820px){
+  .map-pin{min-height:100svh;height:100svh;padding:84px 0 12px;gap:4px;grid-template-rows:auto 1fr auto auto}
+  .map-head h2{font-size:26px}.map-head p{font-size:13px;margin-top:2px}
+  .globe-wrap{height:auto;min-height:0}
+  .map-stage{display:grid;grid-template-rows:1fr auto;min-height:0}
+  .map-card{max-width:none;min-height:0;padding:0 16px}
+  .map-card h3{font-size:24px}.map-card p{font-size:13px;margin-top:4px}.map-card .phase{margin-top:4px}
+  .map-rail{display:none}
+}
+
+/* locations */
+.place{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);padding:56px 0;align-items:center}
+.place:nth-child(even) .place-media{order:2}
+.place-media{aspect-ratio:4/3;overflow:hidden;background:var(--soft);border-radius:4px}
+.place-media img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.place:hover .place-media img{transform:scale(1.04)}
+.place h3{font-size:clamp(28px,3.4vw,44px);margin:8px 0 4px;color:#fff}
+.place .when{color:var(--mid)}
+.place ul{list-style:none;margin-top:20px;display:grid;gap:10px}
+.place li{font-size:15px;padding-left:18px;position:relative;color:var(--ink)}
+.place li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:2px;background:var(--orange)}
+.lens{margin-top:18px;font-size:13px;color:var(--mid)}
+.lens b{color:var(--orange);font-weight:600}
+.credit{margin-top:12px;font-size:10px;color:#666;letter-spacing:.1em;text-transform:uppercase}
+.strip{grid-column:1 / -1;order:3;display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.strip{grid-auto-flow:dense}
+.strip figure{aspect-ratio:4/5;overflow:hidden;border-radius:3px;background:var(--soft)}
+.strip figure.w{grid-column:span 2;aspect-ratio:8/5}
+.strip img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.strip figure:hover img{transform:scale(1.05)}
+@media(max-width:820px){.place{grid-template-columns:1fr;gap:18px;padding:36px 0}.place:nth-child(even) .place-media{order:0}.strip{grid-template-columns:repeat(2,1fr)}.strip figure.w{grid-column:span 2}}
+
+/* work */
+.grid{display:grid;grid-auto-flow:dense;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:40px}
+.grid figure{aspect-ratio:4/5;overflow:hidden;background:var(--soft);border-radius:3px}
+.grid figure.w{grid-column:span 2;aspect-ratio:8/5}
+.grid img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.grid figure:hover img{transform:scale(1.05)}
+.grid figcaption{font-size:11px;color:var(--mid);padding:6px 0 0;letter-spacing:.04em}
+@media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px;text-align:center;max-width:1000px;margin-left:auto;margin-right:auto}
+.facts b{display:block;font-size:clamp(26px,3vw,40px);font-weight:500;letter-spacing:-.02em;color:var(--orange);font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--mid)}
+.brands{margin-top:56px;text-align:center}
+.brand-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:26px 40px;margin-top:24px;max-width:980px;margin-left:auto;margin-right:auto}
+.brand-row img{height:22px;width:auto;filter:brightness(0) invert(1);opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.brand-row svg{height:22px;width:auto;fill:#fff;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.brand-row.show img,.brand-row.show svg{opacity:.8;transform:none}
+.brand-row img[alt="lululemon"]{filter:grayscale(1) brightness(1.7)}
+.brand-row img[alt="lululemon"],.brand-row img[alt="Arc'teryx"]{height:34px}
+.brand-row img[alt="Maui Jim"],.brand-row img[alt="Ray-Ban"]{height:30px}
+@media(max-width:820px){.brand-row img[alt="lululemon"],.brand-row img[alt="Arc'teryx"]{height:28px}.brand-row img[alt="Maui Jim"],.brand-row img[alt="Ray-Ban"]{height:24px}}
+.brand-row.show > *:nth-child(2){transition-delay:.06s}.brand-row.show > *:nth-child(3){transition-delay:.12s}.brand-row.show > *:nth-child(4){transition-delay:.18s}.brand-row.show > *:nth-child(5){transition-delay:.24s}.brand-row.show > *:nth-child(6){transition-delay:.3s}.brand-row.show > *:nth-child(7){transition-delay:.36s}.brand-row.show > *:nth-child(8){transition-delay:.42s}.brand-row.show > *:nth-child(9){transition-delay:.48s}.brand-row.show > *:nth-child(10){transition-delay:.54s}.brand-row.show > *:nth-child(11){transition-delay:.6s}.brand-row.show > *:nth-child(12){transition-delay:.66s}
+@media(max-width:820px){.facts{grid-template-columns:1fr 1fr;gap:12px}.brand-row{gap:22px 30px}.brand-row img,.brand-row svg{height:18px}}
+
+/* offer */
+.offer{background:rgba(17,17,17,.85)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,56px);margin-top:48px;text-align:left}
+.col h3{font-size:20px;margin-bottom:14px;color:#fff}
+.col h3 span{color:var(--orange)}
+.col ul{list-style:none;display:grid;gap:10px}
+.col li{font-size:15px;color:var(--ink);padding-left:18px;position:relative}
+.col li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:2px;background:var(--orange)}
+.col li b{font-weight:600;color:var(--orange)}
+.col p{font-size:15px;color:var(--mid)}
+.note{margin:48px auto 0;max-width:760px;font-size:15px;padding:18px 22px;background:rgba(255,196,0,.07);border-radius:6px;color:var(--mid)}
+.note b{display:block;font-weight:600;margin-bottom:6px;color:var(--orange);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+
+/* framing */
+.frame-wrap{margin:48px auto 0;max-width:980px}
+.frame{position:relative;aspect-ratio:3/2;overflow:hidden;border-radius:4px;background:var(--soft)}
+.frame img{width:100%;height:100%;object-fit:cover}
+.frame .box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 1px rgba(0,0,0,.4);pointer-events:none}
+.frame .box span{position:absolute;left:6px;top:6px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#fff;background:rgba(7,7,7,.7);padding:3px 7px}
+.frame .box.r169{width:100%;height:56.25%;border-color:var(--orange)}
+.frame .box.r11{width:66.67%;height:100%}
+.frame .box.r45{width:53.33%;height:100%}
+.frame .box.r916{width:37.5%;height:100%}
+.frame .box.r916 span{left:auto;right:6px}
+@media(max-width:820px){.frame .box.r45 span{top:30px}}
+.frame-cap{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:16px;font-size:13px;color:var(--mid)}
+.frame-cap b{color:#fff;font-weight:600}
+
+/* contact */
+.contact{min-height:80svh;display:grid;place-items:center;text-align:center}
+.contact h2{font-size:clamp(40px,7vw,110px);letter-spacing:-.04em;max-width:12ch;margin:0 auto;color:#fff}
+.contact h2 em{font-style:normal;color:var(--orange)}
+.contact p{color:var(--mid);margin:20px auto 0;max-width:46ch}
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:34px}
+.links a{text-decoration:none;border:1px solid #444;padding:13px 22px;font-size:13px;letter-spacing:.06em;border-radius:999px;transition:all .3s}
+.links a:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px)}
+.links a.primary{background:var(--orange);color:#111;border-color:var(--orange)}
+.links a.primary:hover{background:#fff;border-color:#fff;color:#111}
+footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#666}
+
+.rv,.rvi,.rvl{opacity:0}
+.rv.in,.rvi.in,.rvl.in{opacity:1}
+@media(prefers-reduced-motion:reduce){.scroll-cue{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bar" aria-hidden="true"><span>Maui Jim × Justin Choquette</span><span>FW Winter Sport · Key Visuals</span></div>
+
+<!-- 1 · COVER -->
+<section class="cover">
+  <div class="cover-photo"><img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="Skier in bright midday light below Black Tusk, Whistler, reference"></div>
+  <div class="cover-text">
+    <p class="label">Maui Jim FW campaign · Two key visuals · Winter sport</p>
+    <h1 id="coverTitle" style="margin-top:18px"><span class="ln"><span>Maui Jim</span></span><span class="ln"><span>in the Snow</span></span></h1>
+    <span class="orule" id="coverRule"></span>
+    <p class="sub">Two portrait key visuals for the Maui Jim FW campaign: skiing and snowboarding in bright midday light, framed wide for every crop in the layout grid. Shot across the Coast Mountains, Hokkaido and the Rockies between now and January, with print-ready files delivered within five days of each shoot.</p>
+    <ul class="loc-list" id="locList">
+      <li><span>Coast Mountains, BC &amp; Washington</span><span>Now – Nov 20</span></li>
+      <li><span>Hokkaido, Japan</span><span>Nov 20 – 30</span></li>
+      <li><span>Canadian Rockies &amp; Colorado</span><span>Dec 13 → Jan</span></li>
+      <li><span>New Zealand glaciers</span><span>Future option</span></li>
+    </ul>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<!-- 2 · MAP -->
+<section class="map-sec">
+  <div class="map-pin" id="mapPin">
+    <button class="skip-route" id="skipRoute" type="button">Skip the route ↓</button>
+    <div class="map-head">
+      <h2>The route</h2>
+      <p>Scroll to fly it. Four snow regions in the next eight weeks, so the shoot happens wherever the frames land first.</p>
+    </div>
+    <div class="map-stage">
+      <div class="globe-wrap" id="globeWrap"><div id="globe"></div></div>
+      <div class="map-card" aria-live="polite">
+        <p class="label" id="mcIdx">Stop 1 of 9</p>
+        <h3 id="mcName">Vancouver</h3>
+        <p class="when" id="mcWhen">Now to November 20</p>
+        <p id="mcText"></p>
+        <p class="phase" id="mcPhase"></p>
+      </div>
+    </div>
+    <div class="map-rail" id="mapRail"></div>
+  </div>
+</section>
+
+<!-- 3 · LOCATIONS -->
+<section class="places">
+  <div class="wrap center">
+    <p class="label">The locations</p>
+    <h2 class="big">Where the key visuals get shot.</h2>
+    <p class="lead">The brief asks for skiing and snowboarding, bright midday light, and snow in every frame. Justin is standing in it for the next two months. The first three regions are locked. New Zealand is the glacier option for a future round.</p>
+  </div>
+  <div class="wrap">
+
+    <div class="place rv">
+      <div class="place-media rvi"><img src="assets/photos/ref/na/na-02-20230316-wb-berger-008-medium-hero.jpg" alt="Black Tusk and the Coast Mountains under fresh snow, Whistler, reference" loading="lazy"></div>
+      <div>
+        <p class="label">Canada &amp; USA · shooting now</p>
+        <h3>Coast Mountains</h3>
+        <p class="when">Now to November 20 · British Columbia and Washington</p>
+        <ul>
+          <li>Backcountry skiing and splitboarding above Whistler and the Duffey Lake road</li>
+          <li>A metre of snow is already down. Bluebird days, high sun, the look of the references</li>
+          <li>Mount Baker and Mount Rainier for the big peak-behind-the-subject frame</li>
+        </ul>
+        <p class="lens"><b>The fastest option.</b> Justin is based here. The day the frames arrive, he and the crew are up the hill with them.</p>
+        <p class="credit">Reference images and Justin's frames</p>
+      </div>
+      <div class="strip rvi">
+        <figure class="w"><img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/na/pick-13.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/na/pick-05.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/na/pick-12.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/na/na-09-full-recovered-recovered.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/work/pick-02.jpg" alt="" loading="lazy"></figure>
+      </div>
+    </div>
+
+    <div class="place rv">
+      <div class="place-media rvi"><img src="assets/photos/ref/japan/pick-01.jpg" alt="Snowboarder dropping in above Mount Yotei, Niseko, reference" loading="lazy"></div>
+      <div>
+        <p class="label">Japan · locked</p>
+        <h3>Hokkaido</h3>
+        <p class="when">November 20 to 30 · Sapporo, Niseko and Kiroro</p>
+        <ul>
+          <li>Niseko opening day, November 28: skiing and snowboarding with Mount Yotei behind</li>
+          <li>Some of the deepest, driest snow on earth, and Sapporo is the snowiest major city anywhere</li>
+          <li>An urban snow option: the frames on the street in a Sapporo storm, if the client wants a city visual</li>
+        </ul>
+        <p class="lens"><b>Already booked.</b> Justin is in Hokkaido for a ski trip either way, so the campaign rides on a trip that is already happening.</p>
+        <p class="credit">Reference images</p>
+      </div>
+      <div class="strip rvi">
+        <figure><img src="assets/photos/ref/japan/pick-12.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/japan/pick-06.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/japan/pick-03.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/japan/pick-04.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/japan/japan-09-80d7efc3d1a8b970438d62bed2ab7317.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/japan/pick-11.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/japan/pick-02.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/japan/pick-07.jpg" alt="" loading="lazy"></figure>
+      </div>
+    </div>
+
+    <div class="place rv">
+      <div class="place-media rvi"><img src="assets/photos/ref/na/pick-07.jpg" alt="Lake Louise frozen under fresh snow, Banff, reference" loading="lazy"></div>
+      <div>
+        <p class="label">Canada &amp; USA · deep winter</p>
+        <h3>Canadian Rockies and Colorado</h3>
+        <p class="when">December 13 into January · Banff, Lake Louise, Vail, Aspen, Boulder</p>
+        <ul>
+          <li>Banff and Lake Louise at minus fifteen: hard blue sky, high sun, snow that squeaks</li>
+          <li>Colorado's Front Range: ski touring, resort days at Vail and Aspen, 300 days of sun a year</li>
+          <li>The frozen lake frame: subject small, mountains huge, room for every crop</li>
+        </ul>
+        <p class="lens"><b>From December 13.</b> Justin is moving to Colorado this winter, so the Rockies on both sides of the border are on his doorstep.</p>
+        <p class="credit">Reference images and Justin's frames</p>
+      </div>
+      <div class="strip rvi">
+        <figure class="w"><img src="assets/photos/ref/na/pick-01.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/na/pick-04.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/work/work-47-mtrobsonnightjpg.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/na/pick-06.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/work/work-28-banff-1.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/na/pick-11.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/na/pick-10.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/na/na-06-img-0116-2-edit.jpg" alt="" loading="lazy"></figure>
+      </div>
+    </div>
+
+    <div class="place rv">
+      <div class="place-media rvi"><img src="assets/photos/ref/nz/glacier-03.jpg" alt="Névé and cloud on the Southern Alps, New Zealand, reference" loading="lazy"></div>
+      <div>
+        <p class="label">New Zealand · future option</p>
+        <h3>The Southern Alps</h3>
+        <p class="when">December 1 to 12 this year, or any southern winter · Fox, Franz Josef and Tasman glaciers</p>
+        <ul>
+          <li>Heli-access glacier shoots: blue ice, crevasse fields and snow that never melts</li>
+          <li>Aoraki / Mount Cook from the Hooker and Tasman valleys</li>
+          <li>Summer in the valleys, winter on the ice. A second campaign look without waiting for a northern season</li>
+        </ul>
+        <p class="lens"><b>Not in this round.</b> Justin is on the South Island in December anyway. If Maui Jim wants a glacier visual for a future drop, the trip is already on the calendar.</p>
+        <p class="credit">Reference images and Justin's frames</p>
+      </div>
+      <div class="strip rvi">
+        <figure class="w"><img src="assets/photos/ref/nz/glacier-01.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/work/pick-13.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/work/pick-04.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/nz/pick-04.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/nz/glacier-02.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/nz/pick-03.jpg" alt="" loading="lazy"></figure>
+        <figure><img src="assets/photos/ref/nz/pick-10.jpg" alt="" loading="lazy"></figure>
+        <figure class="w"><img src="assets/photos/ref/nz/glacier-04.jpg" alt="" loading="lazy"></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · PAST WORK -->
+<section class="work">
+  <div class="wrap center">
+    <p class="label">Past work</p>
+    <h2 class="big">Justin Choquette</h2>
+    <p class="lead">Justin is an adventure and landscape photographer with over ten years in the mountains. He has shot product launches and print campaigns for industry-leading brands, from the Karakoram in Pakistan to Mount Everest, and he shoots stills on a Canon R5C with full-resolution, print-ready delivery.</p>
+  </div>
+  <div class="wrap">
+    <div class="grid">
+      <figure class="w rvi"><img src="assets/photos/work/pick-01.jpg" alt="" loading="lazy"><figcaption>K2 base camp, Karakoram, Pakistan</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-02.jpg" alt="" loading="lazy"><figcaption>Mount Robson, British Columbia</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-03.jpg" alt="" loading="lazy"><figcaption>Cheetahs, Tanzania</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-04.jpg" alt="" loading="lazy"><figcaption>Ice cave, Alaska</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-05.jpg" alt="" loading="lazy"><figcaption>Spray Lakes, Alberta</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-06.jpg" alt="" loading="lazy"><figcaption>Canadian Rockies</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-07.jpg" alt="" loading="lazy"><figcaption>Moraine Lake, Alberta</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-08.jpg" alt="" loading="lazy"><figcaption>Cabin, British Columbia</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-09.jpg" alt="" loading="lazy"><figcaption>The Bugaboos, British Columbia</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-10.jpg" alt="" loading="lazy"><figcaption>Torres del Paine, Chile</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-11.jpg" alt="" loading="lazy"><figcaption>Torres del Paine, Chile</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-12.jpg" alt="" loading="lazy"><figcaption>Elephant, Kenya</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-13.jpg" alt="" loading="lazy"><figcaption>Glacier ice, Alaska</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-14.jpg" alt="" loading="lazy"><figcaption>Lake Como, Italy</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-15.jpg" alt="" loading="lazy"><figcaption>Lion, Tanzania</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-16.jpg" alt="" loading="lazy"><figcaption>Lofoten, Norway</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-17.jpg" alt="" loading="lazy"><figcaption>Lofoten, Norway</figcaption></figure>
+      <figure class="w rvi"><img src="assets/photos/work/pick-18.jpg" alt="" loading="lazy"><figcaption>The Bugaboos at sunset</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-19.jpg" alt="" loading="lazy"><figcaption>Fitz Roy, Patagonia</figcaption></figure>
+      <figure class="rvi"><img src="assets/photos/work/pick-20.jpg" alt="" loading="lazy"><figcaption>Fitz Roy, Patagonia</figcaption></figure>
+    </div>
+    <div class="facts rv">
+      <div><b data-count="581" data-suffix="K">581K</b><span>followers, mostly US and Canada</span></div>
+      <div><b data-count="1" data-suffix="B+">1B+</b><span>views across his channels</span></div>
+      <div><b data-count="33" data-suffix="M">33M</b><span>views on one Ray-Ban Meta reel</span></div>
+      <div><b data-count="317" data-suffix="+">317+</b><span>brand campaigns delivered</span></div>
+    </div>
+    <div class="brands rv">
+      <p class="label">Brands he has worked with</p>
+      <div class="brand-row">
+        <svg viewBox="0 0 24 24" aria-label="Apple" role="img"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+        <img src="assets/logos/w-dji.png" alt="DJI">
+        <img src="assets/logos/w-canon.png" alt="Canon">
+        <img src="assets/logos/w-microsoft.png" alt="Microsoft">
+        <img src="assets/logos/w-ford.png" alt="Ford">
+        <img src="assets/logos/w-insta360.png" alt="Insta360">
+        <img src="assets/logos/w-sandisk.png" alt="SanDisk">
+        <img src="assets/logos/w-adidas.png" alt="adidas">
+        <img src="assets/logos/w-arcteryx.png" alt="Arc'teryx">
+        <img src="assets/logos/w-bbc.png" alt="BBC">
+        <img src="assets/logos/w-citizen.png" alt="Citizen">
+        <img src="assets/logos/w-switzerland.png" alt="Switzerland Tourism">
+        <img src="assets/logos/w-lululemon.svg" alt="lululemon">
+        <img src="assets/logos/w-meta.svg" alt="Meta">
+        <img src="assets/logos/w-pepsico.svg" alt="PepsiCo">
+        <img src="assets/logos/w-mauijim.svg" alt="Maui Jim">
+        <img src="assets/logos/w-rayban.svg" alt="Ray-Ban">
+        <img src="assets/logos/w-youtube.svg" alt="YouTube">
+        <img src="assets/logos/w-google.svg" alt="Google">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · THE BRIEF -->
+<section class="offer">
+  <div class="wrap center">
+    <p class="label">The brief</p>
+    <h2 class="big">Two key visuals. Every crop. One year, worldwide.</h2>
+    <p class="lead">As briefed by PULSE on November 3 and quoted the same day. Skiing and snowboarding, shot in the snow, in bright midday light, framed wide for the campaign layout grid.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols">
+      <div class="col rv">
+        <h3>The <span>deliverable</span></h3>
+        <ul>
+          <li><b>2</b> portrait key visuals, selected from a wider set of static images</li>
+          <li>Wide framing with space around the subject for 1:1, 4:5, 9:16 and 16:9 crops</li>
+          <li>Full-resolution, print-ready files for in-store display, several edits of each frame so the client picks the look</li>
+          <li>Skiing and snowboarding, shot in the snow, bright midday light to match the references</li>
+          <li>Not posted on Justin's channels. The images belong to the campaign</li>
+        </ul>
+      </div>
+      <div class="col rv">
+        <h3>The <span>timeline</span></h3>
+        <ul>
+          <li><b>Nov 13</b> frames ship to Justin in British Columbia</li>
+          <li><b>On arrival</b> first shoot in the Coast Mountains, the same week</li>
+          <li><b>Nov 20 – 30</b> Hokkaido, including Niseko opening day on the 28th</li>
+          <li><b>5 days</b> after each shoot, edited selects sent to PULSE for review</li>
+          <li><b>Dec 13 →</b> the Rockies and Colorado if the client wants a third look</li>
+        </ul>
+      </div>
+      <div class="col rv">
+        <h3>The <span>terms</span></h3>
+        <ul>
+          <li><b>EUR 8,000</b> as quoted, covering the shoot and the usage below</li>
+          <li>Worldwide usage, in store and digital, paid and organic, one year from first use</li>
+          <li>No category exclusivity, as confirmed by PULSE on November 4</li>
+          <li>Travel to a client-specified location available on request</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="frame-wrap rv">
+      <p class="label center">Framing for the grid</p>
+      <div class="frame" style="margin-top:14px">
+        <img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="Wide winter frame with the four campaign crop ratios overlaid" loading="lazy">
+        <div class="box r169"><span>16:9</span></div>
+        <div class="box r11"><span>1:1</span></div>
+        <div class="box r45"><span>4:5</span></div>
+        <div class="box r916"><span>9:16</span></div>
+      </div>
+      <div class="frame-cap"><span><b>Subject centred</b>, mountain behind</span><span><b>Sky and snow</b> left clear on all sides</span><span><b>Every crop</b> keeps the glasses and the peak</span></div>
+    </div>
+
+    <div class="note rv">
+      <b>Why Justin</b>
+      He wears Maui Jim. He lives in the snow from November to April, and the sun on a glacier is the reason polarised lenses exist. The references are bright midday light on white snow, which is the light Justin has photographed for ten years, from the Bugaboos to the Karakoram. The frames ship, the shoot starts.
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CONTACT -->
+<section class="contact">
+  <div class="wrap">
+    <p class="label">Next step</p>
+    <h2 class="rv" style="margin-top:14px">The snow is <em>already here.</em></h2>
+    <p class="rv">Confirmation, the frames and the layout grid are all that is needed to lock it. Hayden is on email, Justin on WhatsApp.</p>
+    <div class="links rv">
+      <a class="primary" href="mailto:hello@justinchoquette.com">hello@justinchoquette.com</a>
+      <a href="https://wa.me/16042268166" target="_blank" rel="noreferrer">WhatsApp +1 604 226 8166</a>
+      <a href="https://www.instagram.com/justin.choquette/" target="_blank" rel="noreferrer">@justin.choquette</a>
+    </div>
+  </div>
+</section>
+
+<footer><span>Justin Choquette · Vancouver / Denver</span><span>Maui Jim FW Winter Sport · 2026</span></footer>
+
+<script src="assets/routes.js"></script>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script>
+/* ---------- the season, as segments: each ends at a stop ---------- */
+var P={ yvr:[-123.18,49.19], whis:[-122.95,50.12], hnd:[139.78,35.55], cts:[141.692,42.775], chc:[172.532,-43.489], mil:[167.925,-44.672],
+        banff:[-115.57,51.18], aspen:[-106.82,39.19] };
+var SEGS=[
+  {type:"fly", from:P.yvr, to:P.whis, w:1.0, zA:8.6, zB:9.2, out:7.6, countryOnly:true, icon:"car",
+   stop:{name:"Whistler", when:"Now to November 20", text:"Backcountry skiing and splitboarding above Whistler and the Duffey. A metre of snow is already down.", phase:"Shoot 1 · Coast Mountains"}},
+  {type:"fly", from:P.whis, to:P.hnd, w:1.6, zA:9.2, zB:7.5, out:1.3,
+   stop:{name:"Tokyo", when:"November 20", text:"Land, then straight north to the snow.", phase:"Shoot 2 · Japan"}},
+  {type:"fly", from:P.hnd, to:P.cts, w:.9, zA:7.5, zB:6.2, out:4.4, countryOnly:true,
+   stop:{name:"Sapporo", when:"November 21", text:"The snowiest major city on earth. Urban snow option.", phase:"Shoot 2 · Hokkaido"}},
+  {type:"drive", route:"hokkaido", w:2.0, z:7.7, icon:"car", region:"Hokkaido",
+   stop:{name:"Hokkaido by road", when:"November 21 – 30", text:"Sapporo, the Jozankei valley, Niseko for opening day on the 28th, Kiroro, and back to the airport.", phase:"Shoot 2 · Hokkaido"}},
+  {type:"fly", from:P.cts, to:P.chc, w:1.6, zA:5.4, zB:6.5, out:1.3,
+   stop:{name:"Christchurch", when:"December 1", text:"Land, pick up the camper.", phase:"New Zealand · future option"}},
+  {type:"drive", route:"nz", w:2.4, z:6.7, icon:"van", region:"South Island",
+   stop:{name:"South Island by road", when:"December 1 – 12", text:"Lake Tekapo, Aoraki / Mount Cook and the Tasman Glacier, Queenstown, Milford Sound. Fox and Franz Josef on the west coast.", phase:"New Zealand · future option", later:true}},
+  {type:"fly", from:P.mil, to:P.banff, w:1.6, zA:5, zB:6, out:1.3,
+   stop:{name:"Canadian Rockies", when:"From December 13", text:"Banff, Lake Louise and the Icefields in full winter.", phase:"Shoot 3 · Rockies"}},
+  {type:"fly", from:P.banff, to:P.aspen, w:1.0, zA:6, zB:6, out:3.6,
+   stop:{name:"Colorado", when:"December 26 – January", text:"Vail, Aspen and the Front Range at the coldest, brightest point of the year.", phase:"Shoot 3 · Rockies"}}
+];
+var START={name:"Vancouver", when:"Now to November 20", text:"Home base. The Coast Mountains already have a metre of snow.", phase:"Shoot 1 · Coast Mountains"};
+
+(function(){
+  "use strict";
+  var D2R=Math.PI/180;
+  /* great circle between two [lng,lat], n points, longitudes unwrapped to stay continuous */
+  function gc(a,b,n){
+    var la1=a[1]*D2R,lo1=a[0]*D2R,la2=b[1]*D2R,lo2=b[0]*D2R;
+    var d=2*Math.asin(Math.sqrt(Math.sin((la2-la1)/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin((lo2-lo1)/2)**2));
+    var out=[], prev=null;
+    for(var i=0;i<=n;i++){
+      var f=i/n, A=Math.sin((1-f)*d)/Math.sin(d), B=Math.sin(f*d)/Math.sin(d);
+      var x=A*Math.cos(la1)*Math.cos(lo1)+B*Math.cos(la2)*Math.cos(lo2), y=A*Math.cos(la1)*Math.sin(lo1)+B*Math.cos(la2)*Math.sin(lo2), z=A*Math.sin(la1)+B*Math.sin(la2);
+      var lat=Math.atan2(z,Math.sqrt(x*x+y*y))/D2R, lng=Math.atan2(y,x)/D2R;
+      if(prev!==null){ while(lng-prev>180) lng-=360; while(lng-prev<-180) lng+=360; }
+      prev=lng; out.push([lng,lat]);
+    }
+    return out;
+  }
+  function unwrap(coords, prevLng){ var out=[], prev=prevLng; coords.forEach(function(c){ var lng=c[0]; if(prev!==null&&prev!==undefined){ while(lng-prev>180) lng-=360; while(lng-prev<-180) lng+=360; } prev=lng; out.push([lng,c[1]]); }); return out; }
+  function hav(a,b){ var la1=a[1]*D2R,la2=b[1]*D2R,dl=(b[0]-a[0])*D2R; var h=Math.sin((la2-la1)/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dl/2)**2; return 2*6371*Math.asin(Math.sqrt(h)); }
+
+  /* build geometry */
+  var lastLng=null, totalW=0;
+  SEGS.forEach(function(sg){
+    var c = sg.type==="fly" ? gc(sg.from, sg.to, 96) : window.ROUTES[sg.route].coords;
+    sg.coords = unwrap(c, lastLng); lastLng = sg.coords[sg.coords.length-1][0];
+    sg.cum=[0]; for(var i=1;i<sg.coords.length;i++) sg.cum.push(sg.cum[i-1]+hav(sg.coords[i-1],sg.coords[i]));
+    sg.len=sg.cum[sg.cum.length-1]; sg.w0=totalW; totalW+=sg.w; sg.w1=totalW;
+    if(sg.type==="drive") sg.wps=window.ROUTES[sg.route].wps;
+  });
+  function at(sg,t){ /* point + bearing at fraction t of segment length */
+    var d=t*sg.len, i=1; while(i<sg.cum.length-1 && sg.cum[i]<d) i++;
+    var a=sg.coords[i-1], b=sg.coords[i], f=(sg.cum[i]-sg.cum[i-1])>0 ? (d-sg.cum[i-1])/(sg.cum[i]-sg.cum[i-1]) : 0;
+    var lng=a[0]+(b[0]-a[0])*f, lat=a[1]+(b[1]-a[1])*f;
+    var br=Math.atan2((b[0]-a[0])*Math.cos(lat*D2R), b[1]-a[1])/D2R;
+    return {lng:lng,lat:lat,br:br,i:i};
+  }
+  function smooth(x){ x=Math.max(0,Math.min(1,x)); return x*x*(3-2*x); }
+
+  /* stop points for the map */
+  var stopFeatures=[{type:"Feature",properties:{name:"Vancouver",i:0},geometry:{type:"Point",coordinates:P.yvr}}];
+  SEGS.forEach(function(sg,k){
+    if(sg.type==="fly") stopFeatures.push({type:"Feature",properties:{name:sg.stop.name,i:k+1},geometry:{type:"Point",coordinates:sg.to}});
+    else sg.wps.forEach(function(w){ var q=at(sg,w.f); stopFeatures.push({type:"Feature",properties:{name:w.name,i:k+1,sub:1},geometry:{type:"Point",coordinates:[q.lng,q.lat]}}); });
+  });
+  var allCoords=[], segOff=[]; SEGS.forEach(function(sg){ segOff.push(allCoords.length); allCoords=allCoords.concat(sg.coords); });
+
+  /* ---------- card + rail ---------- */
+  var rail=document.getElementById("mapRail"), cur=-1, curSub="";
+  var RAIL=[START].concat(SEGS.map(function(sg){ return sg.stop; }));
+  RAIL.forEach(function(st,i){ var b=document.createElement("button"); b.textContent=st.name; b.dataset.i=i; if(st.later) b.classList.add("later"); rail.appendChild(b); });
+  function setStop(i, sub){
+    if(i===cur && sub===curSub) return; cur=i; curSub=sub;
+    var st=RAIL[i];
+    document.getElementById("mcIdx").textContent="Stop "+(i+1)+" of "+RAIL.length;
+    document.getElementById("mcName").textContent= sub ? sub : st.name;
+    document.getElementById("mcWhen").textContent=st.when;
+    document.getElementById("mcText").textContent=st.text;
+    document.getElementById("mcPhase").textContent=st.phase;
+    Array.prototype.forEach.call(rail.children,function(b,k){ b.classList.toggle("on",k===i); b.classList.toggle("done",k<i); });
+    if(window.__cardSwap) window.__cardSwap();
+  }
+
+  /* ---------- map ---------- */
+  var wrap=document.getElementById("globeWrap"), map=null, marker=null, ready=false, pending=0;
+  var vehicleEl=document.createElement("div"); vehicleEl.className="vehicle plane";
+  vehicleEl.innerHTML='<svg class="plane" viewBox="-8 -8 16 16"><path d="M0,-7 L1.5,-2 L7.5,1.4 L7.5,2.8 L1.5,1.3 L1,5.2 L2.8,6.7 L2.8,7.6 L0,7 L-2.8,7.6 L-2.8,6.7 L-1,5.2 L-1.5,1.3 L-7.5,2.8 L-7.5,1.4 L-1.5,-2 Z"/></svg>'+
+    '<svg class="car" viewBox="-8 -8 16 16"><path d="M-3.5,-6.5 h7 a1.5,1.5 0 0 1 1.5,1.5 v10 a1.5,1.5 0 0 1 -1.5,1.5 h-7 a1.5,1.5 0 0 1 -1.5,-1.5 v-10 a1.5,1.5 0 0 1 1.5,-1.5 z M-2.5,-4.5 h5 v3 h-5 z M-2.5,2 h5 v2.5 h-5 z" fill-rule="evenodd"/></svg>'+
+    '<svg class="van" viewBox="-8 -8 16 16"><path d="M-4,-7 h8 a1.5,1.5 0 0 1 1.5,1.5 v11 a1.5,1.5 0 0 1 -1.5,1.5 h-8 a1.5,1.5 0 0 1 -1.5,-1.5 v-11 a1.5,1.5 0 0 1 1.5,-1.5 z M-3,-5 h6 v2.5 h-6 z M-3,0 h6 v4 h-6 z" fill-rule="evenodd"/></svg>';
+  try{
+    map=new maplibregl.Map({
+      container:"globe", style:"https://tiles.openfreemap.org/styles/dark",
+      center:P.yvr, zoom:9.5, pitch:0, bearing:0, interactive:false, attributionControl:{compact:true},
+      fadeDuration:0, pixelRatio:Math.min(window.devicePixelRatio||1,1.5), maxTileCacheSize:400, canvasContextAttributes:{antialias:false}
+    });
+    map.on("style.load",function(){
+      try{ map.setProjection({type:"globe"}); }catch(e){}
+      /* more land / sea contrast on the dark style */
+      [["background","background-color","#191919"],["water","fill-color","#050507"],["landcover_wood","fill-color","#222"],["landuse_park","fill-color","#222"],["landuse_residential","fill-color","#1f1f1f"]].forEach(function(x){ try{ map.setPaintProperty(x[0],x[1],x[2]); }catch(e){} });
+      map.addSource("ahead",{type:"geojson",data:{type:"Feature",geometry:{type:"LineString",coordinates:allCoords}}});
+      map.addLayer({id:"ahead",type:"line",source:"ahead",paint:{"line-color":"#ffffff","line-opacity":.35,"line-width":1.4,"line-dasharray":[1,3]}});
+      map.addSource("trail",{type:"geojson",data:{type:"Feature",geometry:{type:"LineString",coordinates:[allCoords[0],allCoords[0]]}}});
+      map.addLayer({id:"trail-glow",type:"line",source:"trail",paint:{"line-color":"#FFC400","line-opacity":.35,"line-width":7,"line-blur":4}});
+      map.addLayer({id:"trail",type:"line",source:"trail",paint:{"line-color":"#FFC400","line-width":2.4}});
+      map.addSource("stops",{type:"geojson",data:{type:"FeatureCollection",features:stopFeatures}});
+      map.addLayer({id:"stops-dot",type:"circle",source:"stops",paint:{"circle-radius":["case",["has","sub"],3,4.5],"circle-color":"#070707","circle-stroke-color":"#ffffff","circle-stroke-width":1.4}});
+      map.addLayer({id:"stops-label",type:"symbol",source:"stops",layout:{"text-field":["get","name"],"text-font":["Noto Sans Regular"],"text-size":["case",["has","sub"],11,12],"text-offset":[0,1.2],"text-anchor":"top","text-letter-spacing":.08,"text-transform":"uppercase","text-allow-overlap":false},paint:{"text-color":"#ffffff","text-halo-color":"#070707","text-halo-width":1.5}});
+      marker=new maplibregl.Marker({element:vehicleEl,rotationAlignment:"map",pitchAlignment:"map"}).setLngLat(P.yvr).addTo(map);
+      ready=true; wrap.classList.add("show"); place(pending);
+    });
+  }catch(e){ wrap.style.display="none"; }
+
+  /* zoom at which the whole globe fits inside the map container, with a small margin */
+  function globeZoom(){ var r=wrap.getBoundingClientRect(); var side=Math.min(r.width||800,r.height||600); return Math.max(0, Math.log2(side*0.88*Math.PI/512)); } /* globe diameter at zoom z is 512*2^z/pi px */
+  var lastProg=-1, queued=false, want=0;
+  function place(prog){ pending=prog; want=prog; if(!ready||queued) return; queued=true; requestAnimationFrame(function(){ queued=false; render(want); }); }
+  function render(prog){
+    prog=Math.max(0,Math.min(1,prog));
+    var W=prog*totalW, k=0; while(k<SEGS.length-1 && W>=SEGS[k].w1) k++;
+    var sg=SEGS[k], t=(W-sg.w0)/sg.w; t=Math.max(0,Math.min(1,t));
+    var zoom, pitch=0, u=t;
+    if(sg.type==="fly"){
+      /* hold zoomed in at the origin, climb out, cruise over the globe, descend, hold zoomed in at the destination */
+      var H=.12, OUT=sg.countryOnly ? sg.out : globeZoom(), e=smooth((t-H)/.26), l=smooth((t-.62)/.26);   /* short hops pull back to the country, not the planet */
+      if(t<H){ zoom=sg.zA; u=0; }
+      else if(t<.5){ zoom=sg.zA+(OUT-sg.zA)*e; u=(t-H)/(1-2*H); }
+      else if(t<1-H){ zoom=OUT+(sg.zB-OUT)*l; u=(t-H)/(1-2*H); }
+      else { zoom=sg.zB; u=1; }
+      pitch = zoom>7 ? 22*smooth((zoom-7)/2) : 0;   /* tilt in close */
+    } else { zoom=sg.z; pitch=28; var Hd=.06; u = t<Hd ? 0 : (t>1-Hd ? 1 : (t-Hd)/(1-2*Hd)); }
+    var q=at(sg,Math.max(0,Math.min(1,u)));
+    map.jumpTo({center:[q.lng,q.lat], zoom:zoom, pitch:pitch, bearing:0});
+    /* vehicle */
+    var icon = sg.icon || (sg.type==="fly" ? "plane" : "car");
+    vehicleEl.className="vehicle "+icon;
+    marker.setLngLat([q.lng,q.lat]).setRotation(q.br);
+    /* trail */
+    var flown=allCoords.slice(0, segOff[k]+q.i); flown.push([q.lng,q.lat]);
+    if(flown.length<2) flown.push([q.lng,q.lat]);
+    map.getSource("trail").setData({type:"Feature",geometry:{type:"LineString",coordinates:flown}});
+    /* card: destination of the segment in progress; drive segments name the waypoint just passed */
+    var sub=""; if(sg.type==="drive"){ for(var w=0;w<sg.wps.length;w++){ if(t>=sg.wps[w].f-0.01) sub=sg.wps[w].name; } }
+    var reached = (t>=.88) ? k+1 : k;   /* card flips to the destination as the camera settles on it */
+    if(sg.type==="drive") setStop(k+1, sub); else setStop(reached, "");
+    lastProg=prog;
+  }
+  var cumW=[0]; SEGS.forEach(function(sg){ cumW.push(sg.w1); });
+
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches || typeof gsap==="undefined";
+  function jumpStatic(i){ place(cumW[i]/totalW); }
+  if(reduce){
+    place(1);
+    rail.addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) jumpStatic(+b.dataset.i); });
+    document.getElementById("skipRoute").addEventListener("click",function(){ document.querySelector(".places").scrollIntoView({behavior:"smooth"}); });
+  } else {
+    gsap.registerPlugin(ScrollTrigger);
+    var st=ScrollTrigger.create({ trigger:"#mapPin", start:"top top", end:"+="+(SEGS.length*110)+"%", pin:true, scrub:1, onUpdate:function(s){ place(s.progress); } });
+    function jump(i){ var y=st.start+(st.end-st.start)*(cumW[i]/totalW)+2; window.scrollTo({top:y,behavior:"smooth"}); }
+    rail.addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) jump(+b.dataset.i); });
+    document.getElementById("skipRoute").addEventListener("click",function(){ place(1); var y=document.querySelector(".places").getBoundingClientRect().top+window.scrollY-10; window.scrollTo({top:y,behavior:"smooth"}); });
+    window.addEventListener("load",function(){ ScrollTrigger.refresh(); });
+  }
+  place(0);
+
+  /* ---------- motion ---------- */
+  var els=document.querySelectorAll(".rv,.rvi,.rvl");
+  if(reduce){ els.forEach(function(el){ el.classList.add("in"); }); document.querySelector(".brand-row").classList.add("show"); return; }
+  gsap.set(".rv,.rvi,.rvl",{opacity:1});
+
+  /* progress line */
+  gsap.to("#progress",{scaleX:1,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:.3}});
+
+  /* cover entrance */
+  var cover=gsap.timeline({defaults:{ease:"power3.out"}});
+  cover.fromTo(".cover-photo img",{scale:1.12},{scale:1,duration:2.2,ease:"power2.out"},0)
+       .from(".cover .label",{y:12,opacity:0,duration:.6},.3).from(".scroll-cue",{opacity:0,duration:.8},1.4)
+       .from("#coverTitle .ln span",{yPercent:110,duration:.9,stagger:.12},.4)
+       .fromTo("#coverRule",{scaleX:0},{scaleX:1,duration:.7},.9)
+       .from(".cover .sub",{y:14,opacity:0,duration:.7},1)
+       .from("#locList li",{x:-16,opacity:0,duration:.5,stagger:.07},1.05);
+  gsap.to(".cover-photo img",{yPercent:12,ease:"none",scrollTrigger:{trigger:".cover-photo",start:"top top",end:"bottom top",scrub:true}});
+
+  /* generic reveals */
+  gsap.utils.toArray(".rv").forEach(function(el){ gsap.from(el,{y:26,opacity:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%",once:true}}); });
+  gsap.utils.toArray(".rvl").forEach(function(el){ gsap.from(el,{scaleX:0,duration:.8,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%",once:true}}); });
+  gsap.utils.toArray(".rvi").forEach(function(el){
+    var img=el.querySelector("img");
+    gsap.from(el,{opacity:0,y:20,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 90%",once:true}});
+    if(img) gsap.fromTo(img,{scale:1.12},{scale:1,duration:1.4,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 90%",once:true}});
+  });
+  /* place text lines stagger */
+  gsap.utils.toArray(".place").forEach(function(pl){
+    gsap.from(pl.querySelectorAll("li, h3, .when, .label, .credit"),{y:14,opacity:0,duration:.6,stagger:.06,ease:"power3.out",scrollTrigger:{trigger:pl,start:"top 80%",once:true}});
+  });
+  /* offer columns + terms */
+  gsap.from(".col li",{x:-14,opacity:0,duration:.5,stagger:.04,ease:"power3.out",scrollTrigger:{trigger:".cols",start:"top 80%",once:true}});
+  /* brands */
+  ScrollTrigger.create({trigger:".brand-row",start:"top 92%",once:true,onEnter:function(){ document.querySelector(".brand-row").classList.add("show"); }});
+  /* map entrance */
+  
+  gsap.from("#mapRail button",{y:8,opacity:0,duration:.4,stagger:.04,ease:"power3.out",scrollTrigger:{trigger:"#mapRail",start:"top 95%",once:true}});
+  /* counters */
+  function fmt(n,dec){ var t=dec?n.toFixed(dec):Math.round(n).toString(); return t.replace(/\B(?=(\d{3})+(?!\d))/g,","); }
+  gsap.utils.toArray("[data-count]").forEach(function(el){
+    var target=parseFloat(el.getAttribute("data-count")), suf=el.getAttribute("data-suffix")||"", dec=parseInt(el.getAttribute("data-dec")||"0",10), o={v:0};
+    gsap.to(o,{v:target,duration:1.6,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 90%",once:true},onUpdate:function(){ el.textContent=fmt(o.v,dec)+suf; },onComplete:function(){ el.textContent=fmt(target,dec)+suf; }});
+  });
+  /* map card swap */
+  window.__cardSwap=function(){ gsap.fromTo(".map-card",{y:8,opacity:.5},{y:0,opacity:1,duration:.4,ease:"power2.out",overwrite:true}); };
+})();
+</script>
+</body>
+</html>
