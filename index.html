@@ -154,8 +154,22 @@ h2.big{font-size:clamp(32px,5vw,64px);margin-bottom:14px;max-width:16ch}
 .note b{display:block;font-weight:600;margin-bottom:6px;color:var(--orange);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 @media(max-width:820px){.cols{grid-template-columns:1fr}}
 
+/* cover meta + spec grid */
+.meta{list-style:none;margin:44px auto 0;display:grid;grid-template-columns:repeat(4,auto);gap:0;justify-content:center;border-top:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18)}
+.meta li{padding:16px 28px;text-align:left;border-left:1px solid rgba(255,255,255,.14)}
+.meta li:first-child{border-left:0}
+.meta span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
+.meta b{font-weight:500;font-size:15px;color:#fff;white-space:nowrap}
+@media(max-width:820px){.meta{grid-template-columns:1fr 1fr}.meta li{border-left:0;padding:12px 10px}.meta li:nth-child(even){border-left:1px solid rgba(255,255,255,.14)}.meta li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}.meta b{white-space:normal;font-size:14px}}
+.spec{margin:48px auto 0;max-width:980px;border-top:1px solid #222}
+.spec div{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid #222;align-items:baseline}
+.spec dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:600}
+.spec dd{font-size:16px;color:var(--ink)}
+.spec dd small{display:block;color:var(--mid);font-size:14px;margin-top:4px}
+@media(max-width:820px){.spec div{grid-template-columns:1fr;gap:6px;padding:14px 0}}
+
 /* framing */
-.frame-wrap{margin:48px auto 0;max-width:980px}
+.frame-wrap{margin:0 auto;max-width:980px}
 .frame{position:relative;aspect-ratio:3/2;overflow:hidden;border-radius:4px;background:var(--soft)}
 .frame img{width:100%;height:100%;object-fit:cover}
 .frame .box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 1px rgba(0,0,0,.4);pointer-events:none}
@@ -189,24 +203,45 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
 <body>
 
 <div class="progress" id="progress"></div>
-<div class="bar" aria-hidden="true"><span>Maui Jim × Justin Choquette</span><span>FW Winter Sport · Key Visuals</span></div>
+<div class="bar" aria-hidden="true"><span>Maui Jim × Justin Choquette</span><span>Key visual proposal · Winter sport</span></div>
 
 <!-- 1 · COVER -->
 <section class="cover">
   <div class="cover-photo"><img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="Skier in bright midday light below Black Tusk, Whistler, reference"></div>
   <div class="cover-text">
-    <p class="label">Maui Jim FW campaign · Two key visuals · Winter sport</p>
+    <p class="label">Key visual proposal · Winter sport campaign · Prepared for PULSE Advertising, November 2026</p>
     <h1 id="coverTitle" style="margin-top:18px"><span class="ln"><span>Maui Jim</span></span><span class="ln"><span>in the Snow</span></span></h1>
     <span class="orule" id="coverRule"></span>
-    <p class="sub">Two portrait key visuals for the Maui Jim FW campaign: skiing and snowboarding in bright midday light, framed wide for every crop in the layout grid. Shot across the Coast Mountains, Hokkaido and the Rockies between now and January, with print-ready files delivered within five days of each shoot.</p>
-    <ul class="loc-list" id="locList">
-      <li><span>Coast Mountains, BC &amp; Washington</span><span>Now – Nov 20</span></li>
-      <li><span>Hokkaido, Japan</span><span>Nov 20 – 30</span></li>
-      <li><span>Canadian Rockies &amp; Colorado</span><span>Dec 13 → Jan</span></li>
-      <li><span>New Zealand glaciers</span><span>Future option</span></li>
+    <p class="sub">Two portrait key visuals for Maui Jim: skiing and snowboarding, shot in snow under bright midday light, framed wide for the campaign layout grid. Photographed by Justin Choquette across the Coast Mountains, Hokkaido and the Rockies between November and January.</p>
+    <ul class="meta" id="locList">
+      <li><span>Client</span><b>Maui Jim · Kering Eyewear</b></li>
+      <li><span>Agency</span><b>PULSE Advertising</b></li>
+      <li><span>Deliverable</span><b>2 portrait key visuals</b></li>
+      <li><span>Shoot window</span><b>November 2026 to January 2027</b></li>
     </ul>
   </div>
   <div class="scroll-cue">Scroll</div>
+</section>
+
+<!-- 1b · AT A GLANCE -->
+<section class="glance">
+  <div class="wrap center">
+    <p class="label">The brief, as received</p>
+    <h2 class="big">Campaign requirements.</h2>
+    <p class="lead">Restated from the PULSE brief of 3 November and the clarifications of 4 November. Everything below is what this proposal is built to deliver.</p>
+  </div>
+  <div class="wrap">
+    <dl class="spec rv">
+      <div><dt>Concept</dt><dd>Winter sport. Skiing and snowboarding, with snow in every frame.</dd></div>
+      <div><dt>Format</dt><dd>Two portrait key visuals, selected from a wider set of still images.<small>Static images only. Not published on the photographer's channels.</small></dd></div>
+      <div><dt>Framing</dt><dd>Wide, subject centred, with clear space on all sides for 1:1, 4:5, 9:16 and 16:9 crops and the campaign layout grid.</dd></div>
+      <div><dt>Light</dt><dd>Bright midday sun on snow, matching the client references.</dd></div>
+      <div><dt>Files</dt><dd>Full-resolution, print-ready masters for in-store display, with several grades of each selected frame.<small>Camera RAW files are not supplied; print masters are delivered at full sensor resolution.</small></dd></div>
+      <div><dt>Usage</dt><dd>Worldwide, in store and digital, paid and organic, for twelve months from first use.</dd></div>
+      <div><dt>Exclusivity</dt><dd>None required, as confirmed by PULSE.</dd></div>
+      <div><dt>Fee</dt><dd>EUR 8,000, as quoted on 3 November, inclusive of the usage above.</dd></div>
+    </dl>
+  </div>
 </section>
 
 <!-- 2 · MAP -->
@@ -215,7 +250,7 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
     <button class="skip-route" id="skipRoute" type="button">Skip the route ↓</button>
     <div class="map-head">
       <h2>The route</h2>
-      <p>Scroll to fly it. Four snow regions in the next eight weeks, so the shoot happens wherever the frames land first.</p>
+      <p>Scroll to follow the route. Four snow regions over the coming eight weeks, so production can begin wherever the product arrives first.</p>
     </div>
     <div class="map-stage">
       <div class="globe-wrap" id="globeWrap"><div id="globe"></div></div>
@@ -235,23 +270,23 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
 <section class="places">
   <div class="wrap center">
     <p class="label">The locations</p>
-    <h2 class="big">Where the key visuals get shot.</h2>
-    <p class="lead">The brief asks for skiing and snowboarding, bright midday light, and snow in every frame. Justin is standing in it for the next two months. The first three regions are locked. New Zealand is the glacier option for a future round.</p>
+    <h2 class="big">Proposed locations.</h2>
+    <p class="lead">Three regions are confirmed on the photographer's schedule and meet the brief as written. New Zealand is included as an option for a future campaign round.</p>
   </div>
   <div class="wrap">
 
     <div class="place rv">
       <div class="place-media rvi"><img src="assets/photos/ref/na/na-02-20230316-wb-berger-008-medium-hero.jpg" alt="Black Tusk and the Coast Mountains under fresh snow, Whistler, reference" loading="lazy"></div>
       <div>
-        <p class="label">Canada &amp; USA · shooting now</p>
+        <p class="label">Canada &amp; USA · available now</p>
         <h3>Coast Mountains</h3>
-        <p class="when">Now to November 20 · British Columbia and Washington</p>
+        <p class="when">To 20 November · British Columbia and Washington State</p>
         <ul>
-          <li>Backcountry skiing and splitboarding above Whistler and the Duffey Lake road</li>
-          <li>A metre of snow is already down. Bluebird days, high sun, the look of the references</li>
-          <li>Mount Baker and Mount Rainier for the big peak-behind-the-subject frame</li>
+          <li>Backcountry skiing and splitboarding above Whistler and along the Duffey Lake road</li>
+          <li>Approximately one metre of snow on the ground as of early November, with clear high-sun days</li>
+          <li>Mount Baker and Mount Rainier for the peak-behind-the-subject composition</li>
         </ul>
-        <p class="lens"><b>The fastest option.</b> Justin is based here. The day the frames arrive, he and the crew are up the hill with them.</p>
+        <p class="lens"><b>Earliest option.</b> The photographer is based in British Columbia, so the first shoot day can follow product arrival directly.</p>
         <p class="credit">Reference images and Justin's frames</p>
       </div>
       <div class="strip rvi">
@@ -267,15 +302,15 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
     <div class="place rv">
       <div class="place-media rvi"><img src="assets/photos/ref/japan/pick-01.jpg" alt="Snowboarder dropping in above Mount Yotei, Niseko, reference" loading="lazy"></div>
       <div>
-        <p class="label">Japan · locked</p>
+        <p class="label">Japan · confirmed travel</p>
         <h3>Hokkaido</h3>
-        <p class="when">November 20 to 30 · Sapporo, Niseko and Kiroro</p>
+        <p class="when">20 to 30 November · Sapporo, Niseko and Kiroro</p>
         <ul>
-          <li>Niseko opening day, November 28: skiing and snowboarding with Mount Yotei behind</li>
-          <li>Some of the deepest, driest snow on earth, and Sapporo is the snowiest major city anywhere</li>
-          <li>An urban snow option: the frames on the street in a Sapporo storm, if the client wants a city visual</li>
+          <li>Niseko opening day, 28 November: resort skiing and snowboarding with Mount Yotei as backdrop</li>
+          <li>Hokkaido receives some of the deepest, driest snowfall in the world; Sapporo is the snowiest major city</li>
+          <li>Optional urban snow setting in Sapporo, should the client want a city-based visual</li>
         </ul>
-        <p class="lens"><b>Already booked.</b> Justin is in Hokkaido for a ski trip either way, so the campaign rides on a trip that is already happening.</p>
+        <p class="lens"><b>Travel confirmed.</b> The photographer is already scheduled in Hokkaido for these dates, so no additional travel cost applies.</p>
         <p class="credit">Reference images</p>
       </div>
       <div class="strip rvi">
@@ -293,15 +328,15 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
     <div class="place rv">
       <div class="place-media rvi"><img src="assets/photos/ref/na/pick-07.jpg" alt="Lake Louise frozen under fresh snow, Banff, reference" loading="lazy"></div>
       <div>
-        <p class="label">Canada &amp; USA · deep winter</p>
+        <p class="label">Canada &amp; USA · mid-winter</p>
         <h3>Canadian Rockies and Colorado</h3>
-        <p class="when">December 13 into January · Banff, Lake Louise, Vail, Aspen, Boulder</p>
+        <p class="when">13 December into January · Banff, Lake Louise, Vail, Aspen, Boulder</p>
         <ul>
-          <li>Banff and Lake Louise at minus fifteen: hard blue sky, high sun, snow that squeaks</li>
-          <li>Colorado's Front Range: ski touring, resort days at Vail and Aspen, 300 days of sun a year</li>
-          <li>The frozen lake frame: subject small, mountains huge, room for every crop</li>
+          <li>Banff and Lake Louise in full winter: clear skies, high sun and deep cold</li>
+          <li>Colorado Front Range: ski touring and resort days at Vail and Aspen, with roughly 300 sunny days a year</li>
+          <li>Frozen-lake compositions with the subject small in frame and generous space for every crop</li>
         </ul>
-        <p class="lens"><b>From December 13.</b> Justin is moving to Colorado this winter, so the Rockies on both sides of the border are on his doorstep.</p>
+        <p class="lens"><b>From 13 December.</b> The photographer relocates to Colorado this winter, placing the Rockies on both sides of the border within reach.</p>
         <p class="credit">Reference images and Justin's frames</p>
       </div>
       <div class="strip rvi">
@@ -321,13 +356,13 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
       <div>
         <p class="label">New Zealand · future option</p>
         <h3>The Southern Alps</h3>
-        <p class="when">December 1 to 12 this year, or any southern winter · Fox, Franz Josef and Tasman glaciers</p>
+        <p class="when">1 to 12 December, or any southern winter · Fox, Franz Josef and Tasman glaciers</p>
         <ul>
-          <li>Heli-access glacier shoots: blue ice, crevasse fields and snow that never melts</li>
+          <li>Helicopter-access glacier locations: blue ice, crevasse fields and permanent snow</li>
           <li>Aoraki / Mount Cook from the Hooker and Tasman valleys</li>
-          <li>Summer in the valleys, winter on the ice. A second campaign look without waiting for a northern season</li>
+          <li>A second seasonal look available outside the northern winter</li>
         </ul>
-        <p class="lens"><b>Not in this round.</b> Justin is on the South Island in December anyway. If Maui Jim wants a glacier visual for a future drop, the trip is already on the calendar.</p>
+        <p class="lens"><b>Not included in this proposal.</b> The photographer is on the South Island in December; a glacier visual can be added for a future campaign round.</p>
         <p class="credit">Reference images and Justin's frames</p>
       </div>
       <div class="strip rvi">
@@ -344,12 +379,33 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
   </div>
 </section>
 
+<!-- 3b · FRAMING -->
+<section class="framing">
+  <div class="wrap center">
+    <p class="label">Framing</p>
+    <h2 class="big">Composed for the layout grid.</h2>
+    <p class="lead">Every frame is shot wide with the subject centred, so one master crops cleanly to all four campaign ratios without losing the eyewear or the horizon.</p>
+  </div>
+  <div class="wrap" style="margin-top:40px">
+    <div class="frame-wrap rv">
+      <div class="frame">
+        <img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="Wide winter frame with the four campaign crop ratios overlaid" loading="lazy">
+        <div class="box r169"><span>16:9</span></div>
+        <div class="box r11"><span>1:1</span></div>
+        <div class="box r45"><span>4:5</span></div>
+        <div class="box r916"><span>9:16</span></div>
+      </div>
+      <div class="frame-cap"><span><b>Subject centred</b> with the peak behind</span><span><b>Clear margins</b> of sky and snow on all sides</span><span><b>Each crop</b> retains the eyewear and the mountain</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- 4 · PAST WORK -->
 <section class="work">
   <div class="wrap center">
-    <p class="label">Past work</p>
+    <p class="label">The photographer</p>
     <h2 class="big">Justin Choquette</h2>
-    <p class="lead">Justin is an adventure and landscape photographer with over ten years in the mountains. He has shot product launches and print campaigns for industry-leading brands, from the Karakoram in Pakistan to Mount Everest, and he shoots stills on a Canon R5C with full-resolution, print-ready delivery.</p>
+    <p class="lead">Adventure and landscape photographer based in British Columbia, with more than ten years of work in alpine and winter environments. Commissioned for product launches and print campaigns by Canon, DJI, Microsoft, Ford and SanDisk, with assignments from the Karakoram to Mount Everest.</p>
   </div>
   <div class="wrap">
     <div class="grid">
@@ -410,58 +466,45 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
 <!-- 5 · THE BRIEF -->
 <section class="offer">
   <div class="wrap center">
-    <p class="label">The brief</p>
-    <h2 class="big">Two key visuals. Every crop. One year, worldwide.</h2>
-    <p class="lead">As briefed by PULSE on November 3 and quoted the same day. Skiing and snowboarding, shot in the snow, in bright midday light, framed wide for the campaign layout grid.</p>
+    <p class="label">Production and terms</p>
+    <h2 class="big">How the shoot runs.</h2>
+    <p class="lead">A small, self-sufficient crew already in the field, a defined review process, and a single fee covering production and usage.</p>
   </div>
   <div class="wrap">
     <div class="cols">
       <div class="col rv">
-        <h3>The <span>deliverable</span></h3>
+        <h3>The <span>production</span></h3>
         <ul>
-          <li><b>2</b> portrait key visuals, selected from a wider set of static images</li>
-          <li>Wide framing with space around the subject for 1:1, 4:5, 9:16 and 16:9 crops</li>
-          <li>Full-resolution, print-ready files for in-store display, several edits of each frame so the client picks the look</li>
-          <li>Skiing and snowboarding, shot in the snow, bright midday light to match the references</li>
-          <li>Not posted on Justin's channels. The images belong to the campaign</li>
+          <li>Photographer plus one assistant, with a skier or snowboarder as talent, or the photographer as the male subject</li>
+          <li>Canon R5C, 45-megapixel stills, delivered as full-resolution print masters</li>
+          <li>Wardrobe to the client's direction: technical alpine, après and lifestyle, or retro ski, in a neutral or high-contrast palette</li>
+          <li>Weather contingency built in: each region offers several shoot days within the window</li>
         </ul>
       </div>
       <div class="col rv">
-        <h3>The <span>timeline</span></h3>
+        <h3>The <span>schedule</span></h3>
         <ul>
-          <li><b>Nov 13</b> frames ship to Justin in British Columbia</li>
-          <li><b>On arrival</b> first shoot in the Coast Mountains, the same week</li>
-          <li><b>Nov 20 – 30</b> Hokkaido, including Niseko opening day on the 28th</li>
-          <li><b>5 days</b> after each shoot, edited selects sent to PULSE for review</li>
-          <li><b>Dec 13 →</b> the Rockies and Colorado if the client wants a third look</li>
+          <li><b>On confirmation</b> product shipped to British Columbia; arrival by 18 November keeps the Japan dates available</li>
+          <li><b>First shoot</b> in the Coast Mountains within the week of product arrival</li>
+          <li><b>20 – 30 Nov</b> Hokkaido, including Niseko opening day</li>
+          <li><b>Within 5 days</b> of each shoot, an edited contact sheet of selects to PULSE</li>
+          <li><b>From 13 Dec</b> Rockies and Colorado, should a further look be wanted</li>
         </ul>
       </div>
       <div class="col rv">
         <h3>The <span>terms</span></h3>
         <ul>
-          <li><b>EUR 8,000</b> as quoted, covering the shoot and the usage below</li>
-          <li>Worldwide usage, in store and digital, paid and organic, one year from first use</li>
-          <li>No category exclusivity, as confirmed by PULSE on November 4</li>
-          <li>Travel to a client-specified location available on request</li>
+          <li><b>EUR 8,000</b> fee, as quoted, covering production and the usage below</li>
+          <li>Worldwide usage, in store and digital, paid and organic, twelve months from first use</li>
+          <li>No category exclusivity</li>
+          <li>Two rounds of selection and retouching feedback included</li>
+          <li>Travel to a client-nominated location available at cost</li>
         </ul>
       </div>
     </div>
-
-    <div class="frame-wrap rv">
-      <p class="label center">Framing for the grid</p>
-      <div class="frame" style="margin-top:14px">
-        <img src="assets/photos/ref/na/na-03-20230316-wb-berger-008-sliding-cards-and.jpg" alt="Wide winter frame with the four campaign crop ratios overlaid" loading="lazy">
-        <div class="box r169"><span>16:9</span></div>
-        <div class="box r11"><span>1:1</span></div>
-        <div class="box r45"><span>4:5</span></div>
-        <div class="box r916"><span>9:16</span></div>
-      </div>
-      <div class="frame-cap"><span><b>Subject centred</b>, mountain behind</span><span><b>Sky and snow</b> left clear on all sides</span><span><b>Every crop</b> keeps the glasses and the peak</span></div>
-    </div>
-
     <div class="note rv">
-      <b>Why Justin</b>
-      He wears Maui Jim. He lives in the snow from November to April, and the sun on a glacier is the reason polarised lenses exist. The references are bright midday light on white snow, which is the light Justin has photographed for ten years, from the Bugaboos to the Karakoram. The frames ship, the shoot starts.
+      <b>Approvals and delivery</b>
+      After each shoot, PULSE and Maui Jim receive a contact sheet of edited selects. The client chooses the frames, the photographer grades each in up to three looks, and final print masters are delivered as layered TIFF and high-quality JPEG with embedded colour profiles. The client handles all format adaptations, as set out in the brief.
     </div>
   </div>
 </section>
@@ -470,8 +513,8 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
 <section class="contact">
   <div class="wrap">
     <p class="label">Next step</p>
-    <h2 class="rv" style="margin-top:14px">The snow is <em>already here.</em></h2>
-    <p class="rv">Confirmation, the frames and the layout grid are all that is needed to lock it. Hayden is on email, Justin on WhatsApp.</p>
+    <h2 class="rv" style="margin-top:14px">Ready to shoot <em>on confirmation.</em></h2>
+    <p class="rv">Confirmation, the product and the layout grid are all that is required to begin. Hayden Gutteridge manages the partnership; Justin is reachable directly on WhatsApp.</p>
     <div class="links rv">
       <a class="primary" href="mailto:hello@justinchoquette.com">hello@justinchoquette.com</a>
       <a href="https://wa.me/16042268166" target="_blank" rel="noreferrer">WhatsApp +1 604 226 8166</a>
@@ -480,7 +523,7 @@ footer{padding:24px var(--gut);display:flex;justify-content:space-between;gap:12
   </div>
 </section>
 
-<footer><span>Justin Choquette · Vancouver / Denver</span><span>Maui Jim FW Winter Sport · 2026</span></footer>
+<footer><span>Justin Choquette · Vancouver / Denver</span><span>Maui Jim · Winter sport key visuals · November 2026</span></footer>
 
 <script src="assets/routes.js"></script>
 <script src="vendor/maplibre-gl.js"></script>
@@ -668,7 +711,7 @@ var START={name:"Vancouver", when:"Now to November 20", text:"Home base. The Coa
        .from("#coverTitle .ln span",{yPercent:110,duration:.9,stagger:.12},.4)
        .fromTo("#coverRule",{scaleX:0},{scaleX:1,duration:.7},.9)
        .from(".cover .sub",{y:14,opacity:0,duration:.7},1)
-       .from("#locList li",{x:-16,opacity:0,duration:.5,stagger:.07},1.05);
+       .from("#locList li",{y:10,opacity:0,duration:.5,stagger:.07},1.05);
   gsap.to(".cover-photo img",{yPercent:12,ease:"none",scrollTrigger:{trigger:".cover-photo",start:"top top",end:"bottom top",scrub:true}});
 
   /* generic reveals */
